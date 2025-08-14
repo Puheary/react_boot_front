@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function UserList() {
   const [users, setUsers] = useState([]);
@@ -30,6 +31,21 @@ export default function UserList() {
     loadUsers();
   };
 
+  const editUser = async (id) => {
+    try {
+        const navigate = useNavigate();
+
+        const res = await axios.get(`http://54.180.94.5:8081/users/${id}`);
+        if(!res.ok) throw new Error('Network response was not ok');
+
+        const data = await res.json();
+
+        navigate(`/edit/${id}`, { state: { user: data }});
+    } catch (error) {
+        console.error('Failed to fetch user:', error);
+    }
+  };
+
   return (
     <div className="container mt-4">
       <h2>User List</h2>
@@ -47,7 +63,7 @@ export default function UserList() {
               <td>{u.name}</td>
               <td>{u.email}</td>
               <td>
-                <a href={`/edit/${u.id}`} className="btn btn-sm btn-warning">Edit</a>{" "}
+                <button onClick={() => editUser(u.id)} className="btn btn-sm btn-info">Edit</button>{" "}
                 <button onClick={() => deleteUser(u.id)} className="btn btn-sm btn-danger">Delete</button>
               </td>
             </tr>
