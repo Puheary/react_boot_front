@@ -41,9 +41,9 @@ export default function UserList() {
         };
 
         console.log('User data fetched successfully:', res);
-        const data = await res.json();
+        // const data = await res.json();
 
-        navigate(`/edit/${id}`, { state: { user: data }});
+        navigate(`/edit/${id}`, { state: { user: res.data }});
     } catch (error) {
         console.error('Failed to fetch user:', error);
     }
