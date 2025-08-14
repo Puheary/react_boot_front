@@ -40,6 +40,7 @@ export default function UserList() {
             throw new Error('Network response was not ok')
         };
 
+        console.log('User data fetched successfully:', res);
         const data = await res.json();
 
         navigate(`/edit/${id}`, { state: { user: data }});
