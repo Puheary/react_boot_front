@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 export default function UserList() {
   const [users, setUsers] = useState([]);
   const [form, setForm] = useState({ name: "", email: "" });
+  const navigate = useNavigate();
+
 
   // 데이터 불러오기
   const loadUsers = async () => {
@@ -33,8 +35,6 @@ export default function UserList() {
 
   const editUser = async (id) => {
     try {
-        const navigate = useNavigate();
-
         const res = await axios.get(`http://54.180.94.5:8081/users/${id}`);
         if(!res.ok) throw new Error('Network response was not ok');
 
